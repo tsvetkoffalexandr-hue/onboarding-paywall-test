@@ -9,9 +9,8 @@ body, html {
 }
 
 #app {
-  width: 100%;
-  max-width: 375px;         /* ограничиваем по ширине */
-  height: 100vh;            /* на всю высоту экрана */
+  width: 375px;
+  height: 812px;
   background-color: white;
   background-size: cover;
   background-position: center;
@@ -20,20 +19,13 @@ body, html {
   border-radius: 28px;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  margin: 0 auto;
-}
-
-.button-container {
-  position: absolute;
-  bottom: 40px;             /* кнопка прижата к низу */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  display: flex;
-  justify-content: center;
 }
 
 .button {
+  position: absolute;
+  bottom: 76px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 305px;
   height: 50px;
   font-size: 17px;
@@ -47,20 +39,6 @@ body, html {
 }
 
 .paywall-btn {
-  background: #007bff;       /* можно задать другой цвет для paywall */
-}
-
-/* 📱 Мобильная адаптация */
-@media (max-width: 480px) {
-  #app {
-    width: 100%;
-    height: 100vh;
-    border-radius: 0;        /* убираем скругления, чтобы фон ровно лег */
-  }
-
-  .button {
-    width: 90%;              /* кнопка тянется почти на всю ширину */
-    max-width: 305px;
-    font-size: 16px;
-  }
+  bottom: 93px;         /* поправка на высоту */
+  background: #007bff;  /* или другой стиль */
 }

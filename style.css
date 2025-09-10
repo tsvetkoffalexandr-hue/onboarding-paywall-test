@@ -63,3 +63,49 @@ body, html {
   /* вместо 93px на 812px → 11.5% */
   bottom: calc(93 / var(--base-h) * 100%);
 }
+
+/* --- МОБИЛЬНЫЙ РЕЖИМ: во весь экран, с учётом Safe Area --- */
+@media (max-width: 480px) {
+  html, body {
+    /* растягиваемся на всю «стабильную» высоту, без прыжков адресной строки */
+    height: 100svh;                 /* iOS 15+ */
+    height: 100dvh;                 /* современные браузеры */
+    background: #fff;               /* убираем серые поля вокруг */
+  }
+
+  #app {
+    width: 100vw;                   /* во всю ширину телефона */
+    height: 100svh;                 /* и во всю высоту, включая safe-area */
+    max-width: 100vw;
+    max-height: 100svh;
+
+    border-radius: 0;               /* без рамки, по краям экрана */
+    box-shadow: none;
+
+    /* заполняем фон полностью; допускаем лёгкий кроп, чтобы не было пустых зон */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* чтобы контент не уползал под «чёлку»/дом-индикатор */
+    padding-top: env(safe-area-inset-top, 0);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  .button {
+    /* оставляем те же пропорции, но поднимаем кнопку над нижним баром Safari */
+    width: calc(305 / 375 * 100vw);
+    height: calc(50 / 812 * 100svh);
+
+    /* базовый отступ 76px от макета + безопасная зона снизу */
+    bottom: calc(76 / 812 * 100svh + env(safe-area-inset-bottom, 0));
+
+    font-size: clamp(15px, 2.2vh, 18px);
+    border-radius: 9999px;
+  }
+
+  .paywall-btn {
+    /* 93px для paywall + безопасная зона снизу */
+    bottom: calc(93 / 812 * 100svh + env(safe-area-inset-bottom, 0));
+  }
+}

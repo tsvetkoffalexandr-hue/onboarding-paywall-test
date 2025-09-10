@@ -1,9 +1,3 @@
-/* Базовые размеры из фигмы */
-:root {
-  --base-w: 375;
-  --base-h: 812;
-}
-
 body, html {
   margin: 0;
   padding: 0;
@@ -15,97 +9,58 @@ body, html {
 }
 
 #app {
-  /* вместо фиксированного размера держим пропорции 375:812 */
-  width: min(100vw, calc(100vh * (var(--base-w) / var(--base-h))));
-  aspect-ratio: calc(var(--base-w) / var(--base-h));
-
+  width: 100%;
+  max-width: 375px;         /* ограничиваем по ширине */
+  height: 100vh;            /* на всю высоту экрана */
   background-color: white;
-  background-size: contain;   /* чтобы картинка влезала без кропа */
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
   position: relative;
   border-radius: 28px;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+}
+
+.button-container {
+  position: absolute;
+  bottom: 40px;             /* кнопка прижата к низу */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .button {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-
-  /* вместо 305px на 375px → 81.3% */
-  width: calc(305 / var(--base-w) * 100%);
-  /* вместо 50px на 812px → 6.2% */
-  height: calc(50 / var(--base-h) * 100%);
-  /* нижний отступ 76px на 812px → 9.36% */
-  bottom: calc(76 / var(--base-h) * 100%);
-
-  font-size: clamp(14px, 2.2vh, 18px);
-  font-weight: 600;
-
+  width: 305px;
+  height: 50px;
+  font-size: 17px;
   border: none;
-  border-radius: 9999px; /* «капсула» */
+  border-radius: 25px;
   background: #007bff;
   color: white;
   cursor: pointer;
   text-align: center;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  -webkit-tap-highlight-color: transparent;
+  line-height: 50px;
 }
 
 .paywall-btn {
-  /* вместо 93px на 812px → 11.5% */
-  bottom: calc(93 / var(--base-h) * 100%);
+  background: #007bff;       /* можно задать другой цвет для paywall */
 }
 
-/* --- МОБИЛЬНЫЙ РЕЖИМ: во весь экран, с учётом Safe Area --- */
+/* 📱 Мобильная адаптация */
 @media (max-width: 480px) {
-  html, body {
-    /* растягиваемся на всю «стабильную» высоту, без прыжков адресной строки */
-    height: 100svh;                 /* iOS 15+ */
-    height: 100dvh;                 /* современные браузеры */
-    background: #fff;               /* убираем серые поля вокруг */
-  }
-
   #app {
-    width: 100vw;                   /* во всю ширину телефона */
-    height: 100svh;                 /* и во всю высоту, включая safe-area */
-    max-width: 100vw;
-    max-height: 100svh;
-
-    border-radius: 0;               /* без рамки, по краям экрана */
-    box-shadow: none;
-
-    /* заполняем фон полностью; допускаем лёгкий кроп, чтобы не было пустых зон */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    /* чтобы контент не уползал под «чёлку»/дом-индикатор */
-    padding-top: env(safe-area-inset-top, 0);
-    padding-bottom: env(safe-area-inset-bottom, 0);
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;        /* убираем скругления, чтобы фон ровно лег */
   }
 
   .button {
-    /* оставляем те же пропорции, но поднимаем кнопку над нижним баром Safari */
-    width: calc(305 / 375 * 100vw);
-    height: calc(50 / 812 * 100svh);
-
-    /* базовый отступ 76px от макета + безопасная зона снизу */
-    bottom: calc(76 / 812 * 100svh + env(safe-area-inset-bottom, 0));
-
-    font-size: clamp(15px, 2.2vh, 18px);
-    border-radius: 9999px;
-  }
-
-  .paywall-btn {
-    /* 93px для paywall + безопасная зона снизу */
-    bottom: calc(93 / 812 * 100svh + env(safe-area-inset-bottom, 0));
+    width: 90%;              /* кнопка тянется почти на всю ширину */
+    max-width: 305px;
+    font-size: 16px;
   }
 }

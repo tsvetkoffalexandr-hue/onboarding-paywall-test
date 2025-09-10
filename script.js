@@ -40,30 +40,33 @@ function renderScreen() {
 
   const screen = config.screens[currentScreen];
   console.log("➡️ Показываем экран:", screen);
+
+  // фон экрана
   app.style.backgroundImage = `url('${screen.image}')`;
 
-  // Paywall screen with redirect
-  // Paywall screen with redirect
-if (screen.type === "paywall" && screen.link) {
+  // один раз и всегда — внутренняя разметка с контейнером кнопки
   app.innerHTML = `
-    <button id="mainButton" class="button paywall-btn">${screen.button}</button>
+    <div class="button-container">
+      <button id="mainButton" class="button ${screen.type === "paywall" ? "paywall-btn" : ""}">
+        ${screen.button}
+      </button>
+    </div>
   `;
 
-  document.getElementById("mainButton").addEventListener("click", () => {
-    trackEvent("subscribe_button_click", { button: screen.button });
-    window.location.href = screen.link;
-  });
-} else {
-  app.innerHTML = `
-    <button id="mainButton" class="button">${screen.button}</button>
-  `;
+  const btn = document.getElementById("mainButton");
 
-  document.getElementById("mainButton").addEventListener("click", () => {
-    const eventName = `button_click_${screen.type}_${currentScreen}`;
-    trackEvent(eventName, { button: screen.button });
-    nextScreen();
-  });
-}
+  if (screen.type === "paywall" && screen.link) {
+    btn.addEventListener("click", () => {
+      trackEvent("subscribe_button_click", { button: screen.button });
+      window.location.href = screen.link;
+    });
+  } else {
+    btn.addEventListener("click", () => {
+      const eventName = `button_click_${screen.type}_${currentScreen}`;
+      trackEvent(eventName, { button: screen.button });
+      nextScreen();
+    });
+  }
 
   trackEvent(`screen_view_${screen.type}_${currentScreen}`);
 }

@@ -1,3 +1,9 @@
+/* Базовые размеры из фигмы */
+:root {
+  --base-w: 375;
+  --base-h: 812;
+}
+
 body, html {
   margin: 0;
   padding: 0;
@@ -9,12 +15,15 @@ body, html {
 }
 
 #app {
-  width: 375px;
-  height: 812px;
+  /* вместо фиксированного размера держим пропорции 375:812 */
+  width: min(100vw, calc(100vh * (var(--base-w) / var(--base-h))));
+  aspect-ratio: calc(var(--base-w) / var(--base-h));
+
   background-color: white;
-  background-size: cover;
+  background-size: contain;   /* чтобы картинка влезала без кропа */
   background-position: center;
   background-repeat: no-repeat;
+
   position: relative;
   border-radius: 28px;
   overflow: hidden;
@@ -23,22 +32,34 @@ body, html {
 
 .button {
   position: absolute;
-  bottom: 76px;
   left: 50%;
   transform: translateX(-50%);
-  width: 305px;
-  height: 50px;
-  font-size: 17px;
+
+  /* вместо 305px на 375px → 81.3% */
+  width: calc(305 / var(--base-w) * 100%);
+  /* вместо 50px на 812px → 6.2% */
+  height: calc(50 / var(--base-h) * 100%);
+  /* нижний отступ 76px на 812px → 9.36% */
+  bottom: calc(76 / var(--base-h) * 100%);
+
+  font-size: clamp(14px, 2.2vh, 18px);
+  font-weight: 600;
+
   border: none;
-  border-radius: 25px;
+  border-radius: 9999px; /* «капсула» */
   background: #007bff;
   color: white;
   cursor: pointer;
   text-align: center;
-  line-height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 .paywall-btn {
-  bottom: 93px;         /* поправка на высоту */
-  background: #007bff;  /* или другой стиль */
+  /* вместо 93px на 812px → 11.5% */
+  bottom: calc(93 / var(--base-h) * 100%);
 }

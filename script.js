@@ -41,20 +41,23 @@ function renderScreen() {
   const screen = config.screens[currentScreen];
   console.log("➡️ Показываем экран:", screen);
 
-  // фон экрана
+  // применяем фон
   app.style.backgroundImage = `url('${screen.image}')`;
 
-  // один раз и всегда — внутренняя разметка с контейнером кнопки
-  app.innerHTML = `
-    <div class="button-container">
-      <button id="mainButton" class="button ${screen.type === "paywall" ? "paywall-btn" : ""}">
-        ${screen.button}
-      </button>
-    </div>
-  `;
+  // очищаем только кнопку (оставляем фон)
+  const buttonContainer = document.createElement("div");
+  buttonContainer.classList.add("button-container");
 
-  const btn = document.getElementById("mainButton");
+  const btn = document.createElement("button");
+  btn.id = "mainButton";
+  btn.className = `button ${screen.type === "paywall" ? "paywall-btn" : ""}`;
+  btn.textContent = screen.button;
 
+  buttonContainer.appendChild(btn);
+  app.innerHTML = "";            // очищаем предыдущее содержимое
+  app.appendChild(buttonContainer);
+
+  // обработчики
   if (screen.type === "paywall" && screen.link) {
     btn.addEventListener("click", () => {
       trackEvent("subscribe_button_click", { button: screen.button });
@@ -68,6 +71,7 @@ function renderScreen() {
     });
   }
 
+  // ивент просмотра
   trackEvent(`screen_view_${screen.type}_${currentScreen}`);
 }
 

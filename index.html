@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Onboarding & Paywall Test</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app"></div>
+
+  <!-- Основной скрипт приложения -->
+  <script src="script.js"></script>
+
+  <!-- Firebase с автоподключением debug_mode -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAnalytics, logEvent, setUserProperties } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAjfrSIek_aPPI__NEPvzs-gYK03f3TNZk",
+      authDomain: "onbpw-test.firebaseapp.com",
+      projectId: "onbpw-test",
+      storageBucket: "onbpw-test.appspot.com",
+      messagingSenderId: "124834833682",
+      appId: "1:124834833682:web:9335644de6b27f2f68bfcb",
+      measurementId: "G-RF9CWV1CZQ"
+    };
+
+    // Включаем debug_mode
+    localStorage.setItem('debug_mode', 'true');
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    window.firebaseAnalytics = analytics;
+    window.logEvent = logEvent;
+  </script>
+</body>
+</html>

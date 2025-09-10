@@ -1,0 +1,30 @@
+{
+  "screens": [
+    {
+      "type": "onboarding",
+      "image": "assets/Onboarding_baseline_1.png",
+      "button": "Continue"
+    },
+    {
+      "type": "onboarding2",
+      "image": "assets/Onboarding_baseline_2.png",
+      "button": "Continue"
+    },
+    {
+      "type": "onboarding3",
+      "image": "assets/Onboarding_baseline_3.png",
+      "button": "Continue"
+    },
+    {
+      "type": "onboarding4",
+      "image": "assets/Onboarding_baseline_4.png",
+      "button": "Continue"
+    },
+    {
+      "type": "paywall",
+      "image": "assets/Paywall_baseline.jpg",
+      "button": "Subscribe",
+      "link": "https://apps.apple.com/th/app/aisafe-ai-safety-advisor/id6738411199"
+    }
+  ]
+}

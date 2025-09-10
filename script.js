@@ -40,38 +40,31 @@ function renderScreen() {
 
   const screen = config.screens[currentScreen];
   console.log("➡️ Показываем экран:", screen);
-
-  // применяем фон
   app.style.backgroundImage = `url('${screen.image}')`;
 
-  // очищаем только кнопку (оставляем фон)
-  const buttonContainer = document.createElement("div");
-  buttonContainer.classList.add("button-container");
+  // Paywall screen with redirect
+  // Paywall screen with redirect
+if (screen.type === "paywall" && screen.link) {
+  app.innerHTML = `
+    <button id="mainButton" class="button paywall-btn">${screen.button}</button>
+  `;
 
-  const btn = document.createElement("button");
-  btn.id = "mainButton";
-  btn.className = `button ${screen.type === "paywall" ? "paywall-btn" : ""}`;
-  btn.textContent = screen.button;
+  document.getElementById("mainButton").addEventListener("click", () => {
+    trackEvent("subscribe_button_click", { button: screen.button });
+    window.location.href = screen.link;
+  });
+} else {
+  app.innerHTML = `
+    <button id="mainButton" class="button">${screen.button}</button>
+  `;
 
-  buttonContainer.appendChild(btn);
-  app.innerHTML = "";            // очищаем предыдущее содержимое
-  app.appendChild(buttonContainer);
+  document.getElementById("mainButton").addEventListener("click", () => {
+    const eventName = `button_click_${screen.type}_${currentScreen}`;
+    trackEvent(eventName, { button: screen.button });
+    nextScreen();
+  });
+}
 
-  // обработчики
-  if (screen.type === "paywall" && screen.link) {
-    btn.addEventListener("click", () => {
-      trackEvent("subscribe_button_click", { button: screen.button });
-      window.location.href = screen.link;
-    });
-  } else {
-    btn.addEventListener("click", () => {
-      const eventName = `button_click_${screen.type}_${currentScreen}`;
-      trackEvent(eventName, { button: screen.button });
-      nextScreen();
-    });
-  }
-
-  // ивент просмотра
   trackEvent(`screen_view_${screen.type}_${currentScreen}`);
 }
 

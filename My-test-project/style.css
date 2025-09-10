@@ -1,0 +1,44 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#app {
+  width: 375px;
+  height: 812px;
+  background-color: white;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.button {
+  position: absolute;
+  bottom: 76px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 305px;
+  height: 50px;
+  font-size: 17px;
+  border: none;
+  border-radius: 25px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  line-height: 50px;
+}
+
+.paywall-btn {
+  bottom: 93px;         /* поправка на высоту */
+  background: #007bff;  /* или другой стиль */
+}
